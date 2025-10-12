@@ -1,0 +1,15 @@
+# C language
+*.o
+*.out
+*.obj
+*.exe
+*.dll
+*.so
+*.a
+*.dSYM/
+*.log
+build/
+dist/
+.vscode/
+.idea/
+*.swp
