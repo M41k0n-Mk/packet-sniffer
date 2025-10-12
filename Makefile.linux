@@ -1,0 +1,37 @@
+# Cross-platform Makefile (PowerShell/Windows, Bash/Linux/macOS)
+CC = gcc
+CFLAGS = -Wall -Wextra -O2
+LDFLAGS = -lpcap
+TARGET = packet_sniffer
+
+ifeq ($(OS),Windows_NT)
+    # Busca recursiva usando PowerShell
+    SOURCES := $(shell powershell -Command "Get-ChildItem -Path src -Recurse -Filter *.c | ForEach-Object { $_.FullName }")
+    SOURCES := $(subst \r,,$(subst \n, ,$(SOURCES)))
+    RM = powershell -Command "Remove-Item -Force"
+else
+    # Busca recursiva usando find (Linux/macOS)
+    SOURCES := $(shell find src -name '*.c')
+    RM = rm -f
+endif
+
+OBJECTS := $(SOURCES:.c=.o)
+
+.PHONY: all
+all: $(TARGET)
+	@echo "=================================================="
+	@echo "Packet Sniffer - Build complete"
+	@echo "=================================================="
+
+$(TARGET): $(OBJECTS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS) $(LDFLAGS)
+
+# Compila cada .o a partir do respectivo .c, mesmo em subpastas
+$(OBJECTS):
+	$(CC) $(CFLAGS) -c $(subst .o,.c,$@) -o $@
+
+.PHONY: clean
+clean:
+	@echo "Cleaning build artifacts..."
+	-$(RM) $(OBJECTS) $(TARGET)
+	@echo "Clean complete."

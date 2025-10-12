@@ -1,0 +1,18 @@
+CC = gcc
+CFLAGS = -Wall -Wextra -O2 -IC:/npcap/Include
+LDFLAGS = -LC:/npcap/Lib -lwpcap -lws2_32
+TARGET = packet_sniffer
+
+SOURCES := $(wildcard src/*.c)
+OBJECTS := $(SOURCES:.c=.o)
+
+all: $(TARGET)
+
+$(TARGET): $(OBJECTS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTS) $(LDFLAGS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	-del /Q $(subst /,\,$(OBJECTS)) $(TARGET)
