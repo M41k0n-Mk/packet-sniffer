@@ -13,3 +13,6 @@ dist/
 .vscode/
 .idea/
 *.swp
+
+# Project-specific binaries
+packet_sniffer
