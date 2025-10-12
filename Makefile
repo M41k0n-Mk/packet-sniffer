@@ -1,6 +1,5 @@
 # Makefile for Packet Sniffer
-# This is a placeholder Makefile for CI/CD purposes
-# Will be updated once source files are added
+# Updated to automatically find all .c files in src/ and subdirectories
 
 # Compiler settings
 CC = gcc
@@ -10,25 +9,28 @@ LDFLAGS = -lpcap
 # Target binary
 TARGET = packet_sniffer
 
-# Source files (to be added)
-SOURCES = 
-OBJECTS = $(SOURCES:.c=.o)
+# Find all .c files in src/ and subdirectories
+SOURCES := $(shell find src -name '*.c')
+OBJECTS := $(SOURCES:.c=.o)
 
 # Default target
 .PHONY: all
 all:
 	@echo "=================================================="
-	@echo "Packet Sniffer - Placeholder Build"
+	@echo "Packet Sniffer - Build"
 	@echo "=================================================="
-	@echo ""
-	@echo "Note: No source files are currently present in the repository."
-	@echo "This is a placeholder Makefile for CI/CD workflow compatibility."
-	@echo ""
-	@echo "Once source files are added, this Makefile will compile them into"
-	@echo "the '$(TARGET)' binary using libpcap."
-	@echo ""
-	@echo "Build completed successfully (placeholder mode)."
-	@echo "=================================================="
+	@if [ -z "$(SOURCES)" ]; then \
+		echo "Note: No source files are currently present in the repository."; \
+		echo "This is a placeholder Makefile for CI/CD workflow compatibility."; \
+		echo ""; \
+		echo "Once source files are added, this Makefile will compile them into"; \
+		echo "the '$(TARGET)' binary using libpcap."; \
+		echo ""; \
+		echo "Build completed successfully (placeholder mode)."; \
+		echo "=================================================="; \
+	else \
+		$(MAKE) $(TARGET); \
+	fi
 
 # Build the target (when sources are available)
 $(TARGET): $(OBJECTS)
@@ -70,4 +72,4 @@ help:
 	@echo "  test     - Run tests (not yet implemented)"
 	@echo "  help     - Show this help message"
 	@echo ""
-	@echo "Current status: Placeholder mode (no source files yet)"
+	@echo "Current status: Ready for source files in src/"
