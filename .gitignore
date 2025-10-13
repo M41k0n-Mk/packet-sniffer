@@ -1,18 +1,18 @@
-# C language
+# C language - Windows
 *.o
-*.out
 *.obj
 *.exe
 *.dll
-*.so
-*.a
-*.dSYM/
+*.lib
+*.pdb
+*.ilk
 *.log
 build/
 dist/
 .vscode/
 .idea/
 *.swp
+*.tmp
 
 # Project-specific binaries
-packet_sniffer
+packet_sniffer.exe

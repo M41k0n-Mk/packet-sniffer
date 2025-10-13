@@ -81,7 +81,7 @@ void print_usage(const char *program_name)
     printf("  %s                          # Capture on default interface\n", program_name);
     printf("  %s -i <device> -c 100        # Capture 100 packets on selected device\n", program_name);
     printf("  %s -f 'tcp port 443'         # Capture only HTTPS traffic\n", program_name);
-    printf("Note: This program requires administrator/root privileges.\n");
+    printf("Note: This program requires administrator privileges (run as administrator).\n");
 }
 
 int main(int argc, char *argv[])

@@ -3,12 +3,14 @@
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
 
 ## Detailed Explanation
+
 Packet Sniffer is a real-time network packet capture and analysis tool written in C. It captures packets that traverse a network interface and provides insights into protocol usage, data transfer, and network performance. The tool supports basic protocol decoding for Ethernet, IPv4, TCP, and UDP packets.
 
 ## Features
-- Real-time packet capture using libpcap
+
+- Real-time packet capture using WinPcap/Npcap
 - Protocol decoding (Ethernet, IPv4, TCP, UDP)
-- Cross-platform support (Linux and Windows)
+- Windows support with native Windows networking
 - BPF filter support for targeted packet capture
 - Clean, modular C code following best practices
 - Configurable packet count and network interface selection
@@ -33,68 +35,40 @@ Each directory contains a README.md with specific information about its purpose 
 
 ## Dependencies
 
-### Linux
-- **libpcap-dev**: Packet capture library
-  ```bash
-  # Ubuntu/Debian
-  sudo apt-get install libpcap-dev
-  
-  # Fedora/RHEL
-  sudo dnf install libpcap-devel
-  
-  # Arch Linux
-  sudo pacman -S libpcap
-  ```
-- **GCC**: C compiler (usually pre-installed)
-- **Make**: Build automation tool
-
-### Windows
 - **WinPcap** or **Npcap**: Packet capture driver for Windows
-  - Download Npcap: https://npcap.com/
+  - Download Npcap: https://npcap.com/ (recommended)
   - Download WinPcap: https://www.winpcap.org/install/ (legacy)
 - **MinGW-w64** or **Visual Studio**: C compiler
-- **Make** (optional): Can use mingw32-make or nmake
+- **Make**: Build automation tool (mingw32-make or nmake)
 
 ## Building from Source
 
-### Linux
-```bash
-# Clone the repository
+```batch
+REM Clone the repository
 git clone https://github.com/M41k0n-Mk/packet-sniffer.git
 cd packet-sniffer
 
-# Build the project
+REM Build the project
 make
 
-# The binary will be created as 'packet_sniffer'
-```
+build_test.bat
 
-### Windows (MinGW)
-```bash
-# Clone the repository
-git clone https://github.com/M41k0n-Mk/packet-sniffer.git
-cd packet-sniffer
-
-# Build the project
-mingw32-make
-
-# The binary will be created as 'packet_sniffer.exe'
+REM The binary will be created as 'packet_sniffer.exe'
 ```
 
 ## Usage
 
-**Important:** This program requires administrator/root privileges to capture packets.
+**Important:** This program requires administrator privileges to capture packets.
 
 ### Basic Usage
-```bash
-# Linux
-sudo ./packet_sniffer
 
-# Windows (run Command Prompt as Administrator)
+```batch
+REM Run Command Prompt as Administrator
 packet_sniffer.exe
 ```
 
 ### Command Line Options
+
 ```
 Usage: packet_sniffer [OPTIONS]
 
@@ -106,24 +80,29 @@ Options:
 ```
 
 ### Examples
-```bash
-# Capture packets on default interface (press Ctrl+C to stop)
-sudo ./packet_sniffer
 
-# Capture 100 packets on eth0
-sudo ./packet_sniffer -i eth0 -c 100
+```batch
+REM Capture packets on default interface (press Ctrl+C to stop)
+packet_sniffer.exe
 
-# Capture only HTTPS traffic
-sudo ./packet_sniffer -f 'tcp port 443'
+REM List all available network devices
+packet_sniffer.exe --list
 
-# Capture UDP packets on wlan0
-sudo ./packet_sniffer -i wlan0 -f 'udp'
+REM Capture 100 packets on selected device
+packet_sniffer.exe -i <device_name> -c 100
 
-# Capture HTTP traffic on specific interface
-sudo ./packet_sniffer -i eth0 -f 'tcp port 80'
+REM Capture only HTTPS traffic
+packet_sniffer.exe -f "tcp port 443"
+
+REM Capture UDP packets on specific interface
+packet_sniffer.exe -i <device_name> -f "udp"
+
+REM Capture HTTP traffic on specific interface
+packet_sniffer.exe -i <device_name> -f "tcp port 80"
 ```
 
 ### BPF Filter Examples
+
 BPF (Berkeley Packet Filter) allows you to filter packets based on various criteria:
 
 - `tcp` - Capture only TCP packets
@@ -138,34 +117,40 @@ BPF (Berkeley Packet Filter) allows you to filter packets based on various crite
 ## Troubleshooting
 
 ### Permission Denied
-If you get a permission error, make sure to run the program with administrator/root privileges:
-```bash
-# Linux
-sudo ./packet_sniffer
 
-# Or add capabilities (Linux only)
-sudo setcap cap_net_raw,cap_net_admin=eip ./packet_sniffer
-./packet_sniffer
+If you get a permission error, make sure to run the program with administrator privileges:
+
+```batch
+REM Right-click Command Prompt and select "Run as administrator"
+packet_sniffer.exe
 ```
 
 ### No Devices Found
-- On Linux: Check if you have the necessary permissions and network interfaces are up
-- On Windows: Ensure WinPcap or Npcap is installed correctly
+
+- Ensure WinPcap or Npcap is installed correctly
+- Check if Windows Firewall is blocking the application
 - Try listing available interfaces manually:
-  ```bash
-  # Linux
-  ip link show
-  ifconfig -a
-  
-  # Windows
+
+  ```batch
+  REM List network interfaces
   ipconfig /all
+
+  REM Or use the built-in option
+  packet_sniffer.exe --list
   ```
+
+### Build Issues
+
+- Make sure MinGW-w64 is properly installed and in PATH
+- Verify WinPcap/Npcap development headers are available
+- Check that wpcap.dll is accessible
 
 ## Roadmap
 
 For detailed information about planned features and development phases, see [ROADMAP.md](ROADMAP.md).
 
 Summary:
+
 - **Phase 1**: Initial release with basic packet capture functionality.
 - **Phase 2**: Add support for more protocols.
 - **Phase 3**: Implement advanced analysis features.
@@ -188,6 +173,7 @@ include/
 ```
 
 ### Clean Code Practices Used
+
 - **Single Responsibility**: Each module has a focused purpose
 - **Meaningful Names**: Clear, descriptive function and variable names
 - **Short Functions**: Functions are concise and focused
@@ -197,6 +183,7 @@ include/
 - **Platform Independence**: Preprocessor directives handle platform-specific code
 
 ## Theory/Practice References
+
 - [TCP/IP Protocol Suite](https://www.oreilly.com/library/view/tcpip-illustrated/0201633612/)
 - [Wireshark](https://www.wireshark.org/)
 - [libpcap Documentation](https://www.tcpdump.org/manpages/pcap.3pcap.html)
