@@ -1,16 +1,11 @@
+#define _GNU_SOURCE  /* For strdup */
 #include "../include/packet_capture.h"
 #include "../include/packet_parser.h"
 #include "../include/error_handler.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-/* Platform-specific includes */
-#ifdef _WIN32
-    #include <winsock2.h>
-#else
-    #include <netinet/in.h>
-#endif
+#include <netinet/in.h>
 
 #define SNAP_LEN 65535
 #define PROMISCUOUS_MODE 1
@@ -19,44 +14,23 @@
 char* get_default_device(void) {
     char errbuf[PCAP_ERRBUF_SIZE];
     char *device;
+    pcap_if_t *all_devices; 
     
-#ifdef _WIN32
-    pcap_if_t *all_devices;
-    pcap_if_t *d;
-    
-    /* Get list of available devices */
+    /* Get list of available devices on Linux */
     if (pcap_findalldevs(&all_devices, errbuf) == -1) {
         fprintf(stderr, "Error finding devices: %s\n", errbuf);
-        return NULL;
-    }
-    
-    /* Use first available device */
-    if (all_devices == NULL) {
-        fprintf(stderr, "No devices found\n");
-        return NULL;
-    }
-    
-    device = strdup(all_devices->name);
-    pcap_freealldevs(all_devices);
-#else
-    /* Use pcap_findalldevs for Unix-like systems (pcap_lookupdev is deprecated) */
-    pcap_if_t *all_devices;
-    
-    if (pcap_findalldevs(&all_devices, errbuf) == -1) {
-        fprintf(stderr, "Error finding devices: %s\n", errbuf);
-        fprintf(stderr, "Try running with sudo/administrator privileges\n");
+        fprintf(stderr, "Try running with sudo privileges\n");
         return NULL;
     }
     
     if (all_devices == NULL) {
         fprintf(stderr, "No devices found\n");
-        fprintf(stderr, "Try running with sudo/administrator privileges\n");
+        fprintf(stderr, "Try running with sudo privileges\n");
         return NULL;
     }
     
     device = strdup(all_devices->name);
     pcap_freealldevs(all_devices);
-#endif
     
     return device;
 }

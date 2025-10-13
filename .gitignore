@@ -1,9 +1,6 @@
 # C language
-*.o
 *.out
 *.obj
-*.exe
-*.dll
 *.so
 *.a
 *.dSYM/

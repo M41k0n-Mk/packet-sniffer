@@ -37,7 +37,7 @@ void print_usage(const char *program_name) {
     printf("  %s -i eth0 -c 100           # Capture 100 packets on eth0\n", program_name);
     printf("  %s -f 'tcp port 443'        # Capture only HTTPS traffic\n", program_name);
     printf("  %s -i wlan0 -f 'udp'        # Capture UDP packets on wlan0\n\n", program_name);
-    printf("Note: This program requires administrator/root privileges.\n");
+    printf("Note: This program requires root privileges (run with sudo).\n");
 }
 
 int main(int argc, char *argv[]) {

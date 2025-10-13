@@ -75,13 +75,6 @@ sudo ./packet_sniffer -i lo -c 3 -f 'icmp'
 - ✅ Proper signal handling
 - ✅ Device detection via pcap_findalldevs
 
-### Windows
-- ⚠️ Not tested in this environment, but code includes:
-  - WinPcap/Npcap compatibility
-  - Platform-specific includes (winsock2.h)
-  - Device enumeration for Windows
-  - Proper preprocessor directives (#ifdef _WIN32)
-
 ## Memory Management
 - ✅ No memory leaks detected in testing
 - ✅ Proper cleanup of pcap handles
@@ -101,17 +94,16 @@ sudo ./packet_sniffer -i lo -c 3 -f 'icmp'
 - No noticeable delays during capture
 
 ## Recommendations for Further Testing
-1. Test on Windows with WinPcap/Npcap
-2. Test with various BPF filters
-3. Test on high-traffic network interfaces
-4. Long-duration capture tests
-5. Memory profiling with valgrind
-6. Test with various network protocols (HTTP, DNS, etc.)
+1. Test with various BPF filters
+2. Test on high-traffic network interfaces
+3. Long-duration capture tests
+4. Memory profiling with valgrind
+5. Test with various network protocols (HTTP, DNS, etc.)
 
 ## Conclusion
 The packet sniffer implementation meets all requirements:
 - ✅ Real-time packet capture using libpcap
-- ✅ Cross-platform compatibility (Linux proven, Windows code ready)
+- ✅ Linux compatibility proven 
 - ✅ Clean code following best practices
 - ✅ Modular design with single responsibility
 - ✅ Comprehensive documentation
