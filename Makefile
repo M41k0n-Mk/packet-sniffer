@@ -1,9 +1,8 @@
 # Makefile for Packet Sniffer
-# Updated to automatically find all .c files in src/ and subdirectories
 
 # Compiler settings
 CC = gcc
-CFLAGS = -Wall -Wextra -O2
+CFLAGS = -Wall -Wextra -O2 -std=c99
 LDFLAGS = -lpcap
 
 # Target binary

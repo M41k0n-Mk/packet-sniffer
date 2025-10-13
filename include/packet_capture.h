@@ -1,6 +1,26 @@
 #ifndef PACKET_CAPTURE_H
 #define PACKET_CAPTURE_H
 
+/* Include system headers first */
+#include <sys/types.h>
+
+/* Define BSD-style types for compatibility if not already defined */
+#ifndef u_char
+typedef unsigned char u_char;
+#endif
+
+#ifndef u_short
+typedef unsigned short u_short;
+#endif
+
+#ifndef u_int
+typedef unsigned int u_int;
+#endif
+
+#ifndef u_long
+typedef unsigned long u_long;
+#endif
+
 #include <pcap.h>
 
 /**

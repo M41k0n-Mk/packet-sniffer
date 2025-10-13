@@ -8,7 +8,7 @@ Packet Sniffer is a real-time network packet capture and analysis tool written i
 ## Features
 - Real-time packet capture using libpcap
 - Protocol decoding (Ethernet, IPv4, TCP, UDP)
-- Cross-platform support (Linux and Windows)
+- Linux support
 - BPF filter support for targeted packet capture
 - Clean, modular C code following best practices
 - Configurable packet count and network interface selection
@@ -33,7 +33,6 @@ Each directory contains a README.md with specific information about its purpose 
 
 ## Dependencies
 
-### Linux
 - **libpcap-dev**: Packet capture library
   ```bash
   # Ubuntu/Debian
@@ -48,16 +47,8 @@ Each directory contains a README.md with specific information about its purpose 
 - **GCC**: C compiler (usually pre-installed)
 - **Make**: Build automation tool
 
-### Windows
-- **WinPcap** or **Npcap**: Packet capture driver for Windows
-  - Download Npcap: https://npcap.com/
-  - Download WinPcap: https://www.winpcap.org/install/ (legacy)
-- **MinGW-w64** or **Visual Studio**: C compiler
-- **Make** (optional): Can use mingw32-make or nmake
-
 ## Building from Source
 
-### Linux
 ```bash
 # Clone the repository
 git clone https://github.com/M41k0n-Mk/packet-sniffer.git
@@ -66,32 +57,20 @@ cd packet-sniffer
 # Build the project
 make
 
+chmod +x build_test.sh
+./build_test.sh
+
 # The binary will be created as 'packet_sniffer'
-```
-
-### Windows (MinGW)
-```bash
-# Clone the repository
-git clone https://github.com/M41k0n-Mk/packet-sniffer.git
-cd packet-sniffer
-
-# Build the project
-mingw32-make
-
-# The binary will be created as 'packet_sniffer.exe'
 ```
 
 ## Usage
 
-**Important:** This program requires administrator/root privileges to capture packets.
+**Important:** This program requires root privileges to capture packets.
 
 ### Basic Usage
 ```bash
-# Linux
+# Run with sudo privileges
 sudo ./packet_sniffer
-
-# Windows (run Command Prompt as Administrator)
-packet_sniffer.exe
 ```
 
 ### Command Line Options
@@ -138,27 +117,21 @@ BPF (Berkeley Packet Filter) allows you to filter packets based on various crite
 ## Troubleshooting
 
 ### Permission Denied
-If you get a permission error, make sure to run the program with administrator/root privileges:
+If you get a permission error, make sure to run the program with root privileges:
 ```bash
-# Linux
 sudo ./packet_sniffer
 
-# Or add capabilities (Linux only)
+# Or add capabilities to avoid sudo
 sudo setcap cap_net_raw,cap_net_admin=eip ./packet_sniffer
 ./packet_sniffer
 ```
 
 ### No Devices Found
-- On Linux: Check if you have the necessary permissions and network interfaces are up
-- On Windows: Ensure WinPcap or Npcap is installed correctly
+- Check if you have the necessary permissions and network interfaces are up
 - Try listing available interfaces manually:
   ```bash
-  # Linux
   ip link show
   ifconfig -a
-  
-  # Windows
-  ipconfig /all
   ```
 
 ## Roadmap
