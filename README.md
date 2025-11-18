@@ -174,3 +174,14 @@ include/
 - [Wireshark](https://www.wireshark.org/)
 - [libpcap Documentation](https://www.tcpdump.org/manpages/pcap.3pcap.html)
 - [BPF Filter Syntax](https://www.tcpdump.org/manpages/pcap-filter.7.html)
+  
+````
+# Disclaimer
+
+This project is for educational and personal experimentation only.
+
+- Run all tools in isolated lab environments (VMs or private networks) and never capture or inspect traffic from systems you do not own or have explicit written permission to test.
+- Defaults bind to `127.0.0.1` and use toy/insecure parameters — do not use in production.
+- Do not commit or publish real private keys, credentials, or personal data.
+- - Found an issue, improvement or vulnerability? Please fork this repository and submit a pull request (PR) with your fix, or open an issue describing the problem and reproduction steps; maintainers will review and respond.
+```
