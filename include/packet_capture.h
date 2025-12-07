@@ -54,4 +54,9 @@ void cleanup_capture(pcap_t *handle);
  */
 char* get_default_device(void);
 
+/**
+ * List available network devices
+ */
+void list_devices(void);
+
 #endif /* PACKET_CAPTURE_H */

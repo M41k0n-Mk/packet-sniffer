@@ -8,6 +8,7 @@ Packet Sniffer is a real-time network packet capture and analysis tool written i
 ## Features
 - Real-time packet capture using libpcap
 - Protocol decoding (Ethernet, IPv4, TCP, UDP)
+- Interactive CLI with menu navigation for interface selection
 - Linux support
 - BPF filter support for targeted packet capture
 - Clean, modular C code following best practices
@@ -81,6 +82,7 @@ Options:
   -i <device>     Network interface to capture from (default: auto-detect)
   -c <count>      Number of packets to capture (default: infinite)
   -f <filter>     BPF filter expression (e.g., 'tcp port 80')
+  -I              Interactive mode: select interface and filter
   -h              Display help message
 ```
 
@@ -97,6 +99,9 @@ sudo ./packet_sniffer -f 'tcp port 443'
 
 # Capture UDP packets on wlan0
 sudo ./packet_sniffer -i wlan0 -f 'udp'
+
+# Interactive mode: select interface and filter interactively
+sudo ./packet_sniffer -I
 
 # Capture HTTP traffic on specific interface
 sudo ./packet_sniffer -i eth0 -f 'tcp port 80'

@@ -35,6 +35,28 @@ char* get_default_device(void) {
     return device;
 }
 
+void list_devices(void) {
+    char errbuf[PCAP_ERRBUF_SIZE];
+    pcap_if_t *all_devices;
+    
+    if (pcap_findalldevs(&all_devices, errbuf) == -1) {
+        fprintf(stderr, "Error finding devices: %s\n", errbuf);
+        return;
+    }
+    
+    printf("Available network interfaces:\n");
+    int i = 1;
+    for (pcap_if_t *dev = all_devices; dev != NULL; dev = dev->next) {
+        printf("%d. %s", i++, dev->name);
+        if (dev->description) {
+            printf(" (%s)", dev->description);
+        }
+        printf("\n");
+    }
+    
+    pcap_freealldevs(all_devices);
+}
+
 pcap_t* initialize_capture(const char *device, const char *filter_expression) {
     char errbuf[PCAP_ERRBUF_SIZE];
     pcap_t *handle;
