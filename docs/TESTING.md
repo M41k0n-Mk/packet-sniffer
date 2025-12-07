@@ -2,6 +2,14 @@
 
 This document describes the testing performed on the packet sniffer implementation.
 
+## Unit Testing
+
+Unit tests are implemented using the Unity framework. Run with `make test`.
+
+### Test Coverage
+- ✅ `get_default_device()`: Verifies device detection
+- ✅ `initialize_capture()`: Tests error handling for invalid devices
+
 ## Build Testing
 
 ### Compilation

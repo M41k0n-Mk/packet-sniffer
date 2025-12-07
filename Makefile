@@ -3,7 +3,7 @@
 # Compiler settings
 CC = gcc
 CFLAGS = -Wall -Wextra -O2 -std=c99
-LDFLAGS = -lpcap
+LDFLAGS = -lpcap -lncurses
 
 # Target binary
 TARGET = packet_sniffer
@@ -52,12 +52,19 @@ install:
 	@echo "Install target not yet implemented."
 	@echo "This will be configured once the project has source code."
 
-# Run tests (placeholder)
+# Run tests
 .PHONY: test
-test:
-	@echo "Running tests..."
-	@echo "No tests are currently configured."
-	@echo "Tests will be added as the project develops."
+test: $(TARGET)
+	@echo "Building and running unit tests..."
+	$(CC) $(CFLAGS) -o tests/test_runner tests/unity.c tests/test_packet_capture.c src/packet_capture.c src/packet_parser.c src/error_handler.c -lpcap
+	./tests/test_runner
+
+# Run integration tests
+.PHONY: integration
+integration: $(TARGET)
+	@echo "Building and running integration tests..."
+	$(CC) $(CFLAGS) -o tests/integration_runner tests/unity.c tests/test_integration.c -lpcap
+	./tests/integration_runner
 
 # Help target
 .PHONY: help
@@ -68,7 +75,8 @@ help:
 	@echo "  all      - Build the packet sniffer (default target)"
 	@echo "  clean    - Remove build artifacts"
 	@echo "  install  - Install the binary (not yet implemented)"
-	@echo "  test     - Run tests (not yet implemented)"
+	@echo "  test        - Run unit tests"
+	@echo "  integration - Run integration tests"
 	@echo "  help     - Show this help message"
 	@echo ""
 	@echo "Current status: Ready for source files in src/"
