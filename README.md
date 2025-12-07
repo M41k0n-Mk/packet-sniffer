@@ -45,6 +45,17 @@ Each directory contains a README.md with specific information about its purpose 
   # Arch Linux
   sudo pacman -S libpcap
   ```
+- **libncurses-dev**: Terminal user interface library (for interactive mode)
+  ```bash
+  # Ubuntu/Debian
+  sudo apt-get install libncurses-dev
+  
+  # Fedora/RHEL
+  sudo dnf install ncurses-devel
+  
+  # Arch Linux
+  sudo pacman -S ncurses
+  ```
 - **GCC**: C compiler (usually pre-installed)
 - **Make**: Build automation tool
 
